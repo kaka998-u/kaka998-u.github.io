@@ -17,7 +17,7 @@ export interface NewsItem {
 export const news: NewsItem[] = [
   {
     date: 'Nov 2026',
-    text: 'I passed my Dissertation Proposal Meeting (DPM). Many thanks to my committee members: Prof. Wei Lu (Chair, ME), Prof. Anna Stefanopoulou (ME), Prof. Xun Huan (ME), and Prof. Ziyou Song (EECS).',
+    text: 'I completed my Dissertation Proposal Meeting (DPM)! Many thanks to my committee members: Prof. Wei Lu, Prof. Anna Stefanopoulou, Prof. Xun Huan, and Prof. Ziyou Song.',
   },
   {
     date: 'Apr 2026',
