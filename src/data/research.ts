@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────
 //  Research matrix: method rows × two application domains,
-//  plus full-width rows (BMS application, battery testing).
+//  plus a full-width row (BMS application).
 //  Each intersection holds one or more topics; every topic is
 //  clickable and has its own detail panel.
 // ─────────────────────────────────────────────────────────────
@@ -45,7 +45,6 @@ export const methods: Axis[] = [
     label: 'Battery Management System (BMS) Application',
     fullWidth: true,
   },
-  { id: 'test', label: 'Battery Testing', fullWidth: true },
 ];
 
 export const applications: Axis[] = [
@@ -199,17 +198,6 @@ export const cells: Record<string, Topic[]> = {
       headline: 'From algorithm to microcontroller',
       body: [
         'I translate algorithms developed in MATLAB and Python into Simulink models, generate embedded C code, and deploy it on microcontrollers, validating functionality and real-time performance through model-in-the-loop (MIL), processor-in-the-loop (PIL), and hardware-in-the-loop (HIL) testing.',
-      ],
-    },
-  ],
-
-  'test:all': [
-    {
-      id: 'testing',
-      short: 'Cell-to-pack testing and model validation',
-      headline: 'Battery testing from coin cells to packs',
-      body: [
-        'I conduct constant-current, dynamic-profile, cycle-aging, and electrochemical impedance spectroscopy (EIS) tests on Arbin, Neware, Maccor, and BioLogic cyclers and the NHR 9300 high-voltage test system. My testing spans NMC, NCA, LFP, and sodium-ion chemistries, from coin cells up to a 108S LFP battery pack, and the data support the parameterization and validation of electrochemical and coupled electrochemical–thermal–aging models.',
       ],
     },
   ],
