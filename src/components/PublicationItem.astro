@@ -1,0 +1,43 @@
+---
+import { renderAuthors, type Publication } from '../data/publications';
+
+interface Props {
+  pub: Publication;
+  /** false when the surrounding page already groups by year. */
+  showYear?: boolean;
+}
+
+const { pub, showYear = true } = Astro.props;
+
+const linkLabels: Record<string, string> = {
+  pdf: 'PDF',
+  doi: 'DOI',
+  arxiv: 'arXiv',
+  code: 'Code',
+  slides: 'Slides',
+  scholar: 'Scholar',
+};
+
+const links = Object.entries(pub.links ?? {}).filter(([, href]) => Boolean(href));
+---
+
+<li class="pub">
+  <p class="pub__title">{pub.title}</p>
+  <p class="pub__authors" set:html={renderAuthors(pub.authors)} />
+  <p class="pub__venue">
+    <span class="pub__journal">{pub.journal}</span>{pub.details ? `, ${pub.details}` : ''}{
+      showYear ? `, ${pub.year}` : ''
+    }
+    {
+      links.length > 0 && (
+        <span class="pub__links">
+          {links.map(([key, href]) => (
+            <a href={href} target="_blank" rel="noopener">
+              {linkLabels[key] ?? key}
+            </a>
+          ))}
+        </span>
+      )
+    }
+  </p>
+</li>

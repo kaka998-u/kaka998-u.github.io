@@ -1,0 +1,143 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entries = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || b.data.year - a.data.year
+);
+
+const projects = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  }))
+);
+
+const defaultId = entries[0]?.id;
+---
+
+<Base title="Projects" description="Research and engineering projects." wide={true}>
+  <div class="page-header">
+    <h1>Projects</h1>
+    <p>Select a project to read the full write-up.</p>
+  </div>
+
+  {
+    projects.length === 0 ? (
+      <p>No projects yet.</p>
+    ) : (
+      <div class="rsplit rsplit--projects">
+        <div class="plist" role="group" aria-label="Projects">
+          {projects.map(({ entry }) => (
+          <div class="ptl__item">
+            <div class="ptl__when">{entry.data.period ?? entry.data.year}</div>
+            <div class="ptl__body">
+            <button
+              class="pitem"
+              type="button"
+              data-key={entry.id}
+              aria-pressed={entry.id === defaultId ? 'true' : 'false'}
+            >
+              <span class="pitem__body">
+                <span class="pitem__title">{entry.data.title}</span>
+                {entry.data.sponsor && (
+                  <span class="pitem__sponsor">{entry.data.sponsor}</span>
+                )}
+              </span>
+            </button>
+
+            {entry.data.funding && (
+              <div
+                class="pfund"
+                data-fund={entry.id}
+                hidden={entry.id !== defaultId}
+              >
+                <p class="pfund__label">Funding and partners</p>
+                <dl class="pfund__list">
+                  {entry.data.funding.program && (
+                    <>
+                      <dt>Program</dt>
+                      <dd>{entry.data.funding.program}</dd>
+                    </>
+                  )}
+                  {entry.data.funding.award && (
+                    <>
+                      <dt>Award</dt>
+                      <dd>{entry.data.funding.award}</dd>
+                    </>
+                  )}
+                  {entry.data.funding.lead && (
+                    <>
+                      <dt>Lead</dt>
+                      <dd>{entry.data.funding.lead}</dd>
+                    </>
+                  )}
+                  {entry.data.funding.partners && (
+                    <>
+                      <dt>Partners</dt>
+                      <dd>{entry.data.funding.partners}</dd>
+                    </>
+                  )}
+                </dl>
+                {entry.data.funding.links.length > 0 && (
+                  <p class="pfund__links">
+                    {entry.data.funding.links.map((l) => (
+                      <a href={l.href} target="_blank" rel="noopener">
+                        {l.label}
+                      </a>
+                    ))}
+                  </p>
+                )}
+              </div>
+            )}
+            </div>
+          </div>
+          ))}
+        </div>
+
+        <div class="detail" id="detail">
+          {projects.map(({ entry, Content }) => (
+            <article
+              class="detail__panel"
+              data-panel={entry.id}
+              hidden={entry.id !== defaultId}
+            >
+              <h2>{entry.data.title}</h2>
+
+              <div class="prose">
+                <Content />
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.pitem');
+  const panels = document.querySelectorAll<HTMLElement>('.detail__panel');
+  const funds = document.querySelectorAll<HTMLElement>('.pfund');
+
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const key = b.dataset.key;
+      if (!key) return;
+      buttons.forEach((x) =>
+        x.setAttribute('aria-pressed', x.dataset.key === key ? 'true' : 'false')
+      );
+      panels.forEach((p) => {
+        p.hidden = p.dataset.panel !== key;
+      });
+      funds.forEach((f) => {
+        f.hidden = f.dataset.fund !== key;
+      });
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        document
+          .getElementById('detail')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>

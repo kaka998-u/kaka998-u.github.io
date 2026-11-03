@@ -1,0 +1,155 @@
+---
+import Base from '../../layouts/Base.astro';
+import { methods, applications, cells, allTopics } from '../../data/research';
+import { site } from '../../data/site';
+
+const topics = allTopics();
+const defaultKey = topics[0]?.key;
+
+const cellKey = (methodId: string, appId: string | null) =>
+  appId ? `${methodId}:${appId}` : `${methodId}:all`;
+---
+
+<Base title="Research" description={`Research directions of ${site.name}.`} wide={true}>
+  <div class="page-header">
+    <h1>Research</h1>
+  </div>
+
+  <div class="rsplit">
+    <div class="matrix" role="group" aria-label="Research topics">
+      <div class="matrix__corner">Batteries</div>
+      {
+        applications.map((app) => (
+          <div class="matrix__colhead">
+            {app.icon === 'ev' && (
+              <svg class="matrix__icon matrix__icon--ev" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3 14.5 4.7 9.4A2 2 0 0 1 6.6 8h8.8a2 2 0 0 1 1.9 1.4L19 14.5v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-8v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linejoin="round"
+                />
+                <circle cx="7" cy="15.5" r="1.1" fill="currentColor" />
+                <circle cx="15" cy="15.5" r="1.1" fill="currentColor" />
+                <path d="M12.6 2.5 9.8 6.6h2.4l-1 3.2 3-4.2h-2.4z" fill="#f2a900" />
+              </svg>
+            )}
+            {app.icon === 'bess' && (
+              <svg class="matrix__icon matrix__icon--bess" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="8" height="14" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <rect x="13" y="5" width="8" height="14" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <path d="M5.4 9h3.2M5.4 12h3.2M5.4 15h3.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+                <path d="M17.6 8.4 15.6 12h1.8l-.6 3 2.2-3.6h-1.8z" fill="#f2a900" />
+              </svg>
+            )}
+            <span class="matrix__axis">{app.label}</span>
+          </div>
+        ))
+      }
+
+      {
+        methods.map((m) => (
+          <>
+            <div class="matrix__rowhead">
+              <span class="matrix__axis">{m.label}</span>
+            </div>
+
+            {(m.fullWidth ? [null] : applications).map((app) => {
+              const key = cellKey(m.id, app ? app.id : null);
+              const list = cells[key] ?? [];
+              return (
+                <div class:list={['cell', m.fullWidth && 'cell--wide']}>
+                  {list.map((t) => (
+                    <button
+                      class="topic"
+                      type="button"
+                      data-key={`${key}#${t.id}`}
+                      aria-pressed={`${key}#${t.id}` === defaultKey ? 'true' : 'false'}
+                    >
+                      <span class="topic__eyebrow">
+                        {m.label}
+                        {app ? ` × ${app.label}` : ''}
+                      </span>
+                      <span class="topic__label">{t.short}</span>
+                    </button>
+                  ))}
+                </div>
+              );
+            })}
+          </>
+        ))
+      }
+    </div>
+
+    <div class="detail" id="detail">
+      {
+        topics.map(({ key, topic, method, app }) => (
+          <article class="detail__panel" data-panel={key} hidden={key !== defaultKey}>
+            <p class="detail__crumb">
+              {method.label}
+              {app ? (
+                <>
+                  {' '}
+                  <span aria-hidden="true">×</span> {app.label}
+                </>
+              ) : (
+                <>
+                  {' '}
+                  <span aria-hidden="true">×</span> All applications
+                </>
+              )}
+            </p>
+            <h2>{topic.headline}</h2>
+            {topic.teaser && <p class="detail__teaser">{topic.teaser}</p>}
+            {topic.body.map((para) => (
+              <p>{para}</p>
+            ))}
+            {topic.figures?.map((f) => (
+              <figure class="detail__figure">
+                <img src={f.src} alt={f.alt} loading="lazy" />
+                <figcaption>{f.caption}</figcaption>
+              </figure>
+            ))}
+            {topic.links && topic.links.length > 0 && (
+              <p class="detail__links">
+                {topic.links.map((l) => (
+                  <a
+                    href={l.href}
+                    target={l.href.startsWith('http') ? '_blank' : undefined}
+                    rel="noopener"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.topic');
+  const panels = document.querySelectorAll<HTMLElement>('.detail__panel');
+
+  buttons.forEach((b) => {
+    b.addEventListener('click', () => {
+      const key = b.dataset.key;
+      if (!key) return;
+      buttons.forEach((x) =>
+        x.setAttribute('aria-pressed', x.dataset.key === key ? 'true' : 'false')
+      );
+      panels.forEach((p) => {
+        p.hidden = p.dataset.panel !== key;
+      });
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        document
+          .getElementById('detail')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>

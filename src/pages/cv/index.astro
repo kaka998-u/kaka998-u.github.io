@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import {
+  education,
+  experience,
+  testing,
+  funding,
+  honors,
+  presentations,
+  skills,
+  teaching,
+} from '../../data/cv';
+---
+
+<Base title="cv" description={`Curriculum vitae of ${site.name}.`}>
+  <div class="page-header">
+    <h1>Curriculum Vitae</h1>
+    <p>Last updated November 2026</p>
+  </div>
+
+  <h2>Education</h2>
+  <ul class="tl">
+    {
+      education.map((e) => (
+        <li class="tl__item">
+          <div class="tl__when">{e.period}</div>
+          <div class="tl__what">
+            <p class="tl__title">
+              {e.school}
+              <span class="tl__place">{e.location}</span>
+            </p>
+            <p class="tl__org">
+              {e.degree} · {e.note}
+            </p>
+            {e.thesis && <p class="tl__note">Thesis: {e.thesis}</p>}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Research Experience</h2>
+  <ul class="tl">
+    {
+      experience.map((x) => (
+        <li class="tl__item">
+          <div class="tl__when">{x.period}</div>
+          <div class="tl__what">
+            <p class="tl__title">{x.title}</p>
+            <p class="tl__org">{x.org}</p>
+            <ul>
+              {x.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Battery Testing and AI Tools</h2>
+  {
+    testing.map((g) => (
+      <div class="cvblock">
+        <p class="tl__title">{g.title}</p>
+        <ul>
+          {g.bullets.map((b) => (
+            <li>{b}</li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+
+  <h2>Research Funding and Grants</h2>
+  <ul class="tl">
+    {
+      funding.map((f) => (
+        <li class="tl__item">
+          <div class="tl__when">{f.period}</div>
+          <div class="tl__what">
+            <p class="tl__title">{f.title}</p>
+            <p class="tl__org">{f.note}</p>
+            <p class="tl__note">{f.role}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Honors and Awards</h2>
+  <ul class="tl">
+    {
+      honors.map((h) => (
+        <li class="tl__item">
+          <div class="tl__when">{h.period}</div>
+          <div class="tl__what">
+            <p class="tl__title">{h.title}</p>
+            <p class="tl__org">{h.note}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Presentations</h2>
+  <ul class="tl">
+    {
+      presentations.map((p) => (
+        <li class="tl__item">
+          <div class="tl__when">{p.year}</div>
+          <div class="tl__what">
+            <p class="tl__title">{p.title}</p>
+            <p class="tl__org">
+              {p.kind} · {p.venue}
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Teaching</h2>
+  <ul class="tl">
+    {
+      teaching.map((t) => (
+        <li class="tl__item">
+          <div class="tl__when">{t.period}</div>
+          <div class="tl__what">
+            <p class="tl__title">Teaching Assistant</p>
+            <p class="tl__org">
+              {t.course} — {t.org}
+            </p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Technical Skills</h2>
+  <div class="prose">
+    <ul>
+      {
+        skills.map((s) => (
+          <li>
+            <strong>{s.label}:</strong> {s.items}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>

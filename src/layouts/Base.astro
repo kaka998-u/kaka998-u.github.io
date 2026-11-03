@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** true = use a wider content column (for pages with side-by-side panels). */
+  wide?: boolean;
+}
+
+const { title, description, wide = false } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : site.name;
+const pageDesc = description ?? `${site.title}, ${site.affiliation}.`;
+const path = Astro.url.pathname;
+
+const navItems = [
+  { href: '/', label: 'About' },
+  { href: '/research/', label: 'Research' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/publications/', label: 'Publications' },
+  { href: '/news/', label: 'News' },
+  { href: '/cv/', label: 'CV' },
+];
+
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:type" content="website" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav__inner">
+        <nav class="nav__links" aria-label="Main">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main class:list={["wrap", "site-main", wide && "wrap--wide"]}>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        © {new Date().getFullYear()} {site.name}. Built with <a
+          href="https://astro.build"
+          target="_blank"
+          rel="noopener">Astro</a
+        >, hosted on GitHub Pages.
+      </div>
+    </footer>
+  </body>
+</html>

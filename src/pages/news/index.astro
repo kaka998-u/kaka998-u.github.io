@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { news } from '../../data/news';
+import { site } from '../../data/site';
+---
+
+<Base title="News" description={`News and updates from ${site.name}.`}>
+  <div class="page-header">
+    <h1>News</h1>
+  </div>
+
+  {
+    news.length === 0 ? (
+      <p>Nothing yet.</p>
+    ) : (
+      <ul class="news">
+        {news.map((item) => (
+          <li class="news__row">
+            <span class="news__date">{item.date}</span>
+            {item.html ? (
+              <p class="news__text" set:html={item.text} />
+            ) : (
+              <p class="news__text">{item.text}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

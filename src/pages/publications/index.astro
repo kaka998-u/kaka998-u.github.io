@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import PublicationItem from '../../components/PublicationItem.astro';
+import { publications, groupByYear } from '../../data/publications';
+import { site } from '../../data/site';
+
+const grouped = groupByYear(publications);
+---
+
+<Base title="publications" description={`Publications by ${site.name}.`}>
+  <div class="page-header">
+    <h1>Publications</h1>
+    {
+      site.links.scholar && (
+        <p>
+          Also on{' '}
+          <a href={site.links.scholar} target="_blank" rel="noopener">
+            Google Scholar
+          </a>
+          .
+        </p>
+      )
+    }
+  </div>
+
+  {
+    grouped.length === 0 ? (
+      <p>No publications yet.</p>
+    ) : (
+      grouped.map(([year, pubs]) => (
+        <div class="pubyear">
+          <div class="pubyear__label">{year}</div>
+          <ul class="pubs">
+            {pubs.map((pub) => (
+              <PublicationItem pub={pub} showYear={false} />
+            ))}
+          </ul>
+        </div>
+      ))
+    )
+  }
+</Base>

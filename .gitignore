@@ -1,0 +1,50 @@
+# ── Allowlist: only the website itself goes into this public repository ──
+# Everything at the top level is ignored unless listed below, so any other
+# folder or file you keep here (code, data, slides, CVs) is never uploaded.
+/*
+!/.github/
+!/src/
+!/public/
+!/.gitignore
+!/README.md
+!/astro.config.mjs
+!/package.json
+!/package-lock.json
+!/tsconfig.json
+!/start-site.bat
+!/publish-site.bat
+
+# build output and dependencies
+dist/
+.astro/
+node_modules/
+
+# never publish documents or data, even inside src/ or public/
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.csv
+*.mat
+*.m
+*.slx
+*.slxc
+*.py
+.env
+.env.production
+.DS_Store
+Thumbs.db
+
+# early drafts and unused assets
+/src/pages/cv-a/
+/src/pages/cv-b/
+/src/pages/cv-c/
+/src/pages/home-alt/
+/src/components/Social.astro
+/src/components/ProjectCard.astro
+/public/avatar.svg
+/public/images/project-battery.svg
+/public/images/news/

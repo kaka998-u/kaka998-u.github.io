@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactRail from '../components/ContactRail.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { site } from '../data/site';
+import { publications } from '../data/publications';
+import { news } from '../data/news';
+
+const selectedPubs = publications.filter((p) => p.selected).slice(0, 3);
+const recentNews = news.slice(0, 3);
+---
+
+<Base>
+  <div class="rail">
+    <aside class="rail__side">
+      {site.avatar && <img class="rail__photo" src={site.avatar} alt={site.name} />}
+      <p class="rail__affil">
+        {site.affiliation}
+        {site.location && (<><br />{site.location}</>)}
+      </p>
+      <ContactRail />
+    </aside>
+
+    <div class="rail__main">
+      <h1 class="bigname">{site.name}</h1>
+      <p class="tagline">{site.title}</p>
+
+      {site.bio.map((paragraph) => <p>{paragraph}</p>)}
+
+      {
+        recentNews.length > 0 && (
+          <>
+            <div class="section-head">
+              <h2>News</h2>
+              {news.length > recentNews.length && <a href="/news/">All news →</a>}
+            </div>
+            <ul class="news">
+              {recentNews.map((item) => (
+                <li class="news__row">
+                  <span class="news__date">{item.date}</span>
+                  {/* photos are shown on the News page, not in this summary */}
+                  {item.html ? (
+                    <p class="news__text" set:html={item.text} />
+                  ) : (
+                    <p class="news__text">{item.text}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+
+      {
+        selectedPubs.length > 0 && (
+          <>
+            <div class="section-head">
+              <h2>Selected Publications</h2>
+              <a href="/publications/">All publications →</a>
+            </div>
+            <ul class="pubs">
+              {selectedPubs.map((pub) => (
+                <PublicationItem pub={pub} />
+              ))}
+            </ul>
+          </>
+        )
+      }
+    </div>
+  </div>
+</Base>

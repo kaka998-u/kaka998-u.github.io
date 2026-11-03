@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+
+const items = [
+  { key: 'email', href: site.links.email ? `mailto:${site.links.email}` : null, label: site.links.email },
+  { key: 'scholar', href: site.links.scholar, label: 'Google Scholar' },
+  { key: 'linkedin', href: site.links.linkedin, label: 'LinkedIn' },
+].filter((i) => Boolean(i.href));
+---
+
+<ul class="rail__contact">
+  {
+    items.map((i) => (
+      <li>
+        <a
+          href={i.href}
+          target={i.href?.startsWith('mailto:') ? undefined : '_blank'}
+          rel="noopener"
+        >
+          {i.key === 'email' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m2 7 10 6 10-6" />
+            </svg>
+          )}
+          {i.key === 'scholar' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 3 2 9l10 6 10-6-10-6Z" />
+              <path d="M6 12.5V17c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5" />
+            </svg>
+          )}
+          {i.key === 'linkedin' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v1.5" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          )}
+          {i.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
