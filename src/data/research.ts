@@ -116,6 +116,13 @@ export const cells: Record<string, Topic[]> = {
       body: [
         'I estimate capacity online from charging and discharging segments collected in real-world EV operation, using a physics-based voltage model.',
       ],
+      figures: [
+        {
+          src: '/images/research/ev-field-capacity.png',
+          alt: 'Three panels: voltage and current of a field discharge segment, model fit to that segment, and the reconstructed C/20 discharge curve with estimated capacity.',
+          caption: 'From a field discharge segment (top), the voltage model is fitted with 4.07 mV RMSE (middle) and reconstructs the C/20 discharge curve, estimating capacity within 0.66% (bottom).',
+        },
+      ],
     },
     {
       id: 'segments',
@@ -202,6 +209,18 @@ export const cells: Record<string, Topic[]> = {
       headline: 'Reinforcement learning charging for longer battery life',
       body: [
         'Using an experimentally calibrated pseudo-two-dimensional (P2D) electrochemical–thermal–aging model, I design reinforcement-learning-based charging strategies with the DSAC algorithm. With constraints on anode potential, temperature rise, and degradation, the resulting charging protocols extend battery life by over 30%.',
+      ],
+      figures: [
+        {
+          src: '/images/research/rl-charging-framework.png',
+          alt: 'Framework diagram: a DSAC agent interacts with a calibrated SPMe-thermal battery model, receiving rewards shaped by anode-potential, temperature and lithium-plating constraints.',
+          caption: 'Reinforcement learning framework: the DSAC agent learns a charging-current ramp from a calibrated battery model, rewarded for speed under anode-potential, temperature and degradation constraints.',
+        },
+        {
+          src: '/images/research/rl-charging-soh.png',
+          alt: 'SOH against cycle number for 1C CC-CV, adaptive and two reinforcement learning charging protocols, down to 80% SOH.',
+          caption: 'SOH over cycling for 1C CC-CV, adaptive and reinforcement learning charging protocols, to end of life at 80% SOH.',
+        },
       ],
     },
   ],
