@@ -31,7 +31,7 @@ export interface Topic {
   /** Body paragraphs. */
   body: string[];
   /** Figures shown under the text, served from public/. */
-  figures?: { src: string; alt: string; caption: string }[];
+  figures?: { src: string; alt: string; caption?: string }[];
   links?: { label: string; href: string }[];
 }
 
@@ -281,7 +281,6 @@ export const cells: Record<string, Topic[]> = {
         {
           src: '/images/research/mcu-deployment-architecture.png',
           alt: 'Architecture on an STM32H723: BMS stream feeds a degradation model, operational segments trigger SOH estimation, and an EKF corrects the degradation model to predict capacity.',
-          caption: 'Embedded architecture on an STM32H723: the degradation model runs every second (29.7 µs per sample), operating segments trigger SOH estimation (7.16 s per event), and an EKF corrects the degradation model (7.9 µs per event), using 79.5 KiB of Flash and 24.4 KiB of SRAM.',
         },
       ],
     },

@@ -110,7 +110,7 @@ const cellKey = (methodId: string, appId: string | null) =>
                 <a href={f.src} target="_blank" rel="noopener" title="Open full size">
                   <img src={f.src} alt={f.alt} loading="lazy" />
                 </a>
-                <figcaption>{f.caption}</figcaption>
+                {f.caption && <figcaption>{f.caption}</figcaption>}
               </figure>
             ))}
             {topic.links && topic.links.length > 0 && (
