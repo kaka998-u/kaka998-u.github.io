@@ -983,3 +983,8 @@ tbody tr:last-child td { border-bottom: 0; }
   border-top: 1px solid var(--border);
 }
 
+
+/* bullet list inside the homepage introduction */
+.bio-list { margin: -0.4rem 0 1rem; padding-left: 1.3rem; }
+.bio-list li { margin-bottom: 0.35rem; }
+.bio-list li::marker { color: var(--accent); }

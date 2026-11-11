@@ -20,9 +20,16 @@ export const site = {
   avatar: '/avatar.jpg',
 
   /** Homepage bio. One string per paragraph. */
+  /** Homepage introduction: a string is a paragraph, an array is a bullet list. */
   bio: [
-    'I am a PhD candidate in Mechanical Engineering at the University of Michigan. My research focuses on lithium-ion battery state estimation and remaining useful life prediction under time-varying operating conditions, with applications in real-time health monitoring and second-life battery screening. I also investigate fast-charging control strategies that balance charging speed and battery longevity. A central focus of my research is bridging the gap between algorithm development and real-world implementation by enabling efficient estimation, prognostics, and control on resource-constrained battery management hardware.',
-  ],
+    'I am a PhD candidate in Mechanical Engineering at the University of Michigan. My research focuses on:',
+    [
+      'Lithium-ion battery state estimation and remaining useful life prediction under time-varying operating conditions, with applications in real-time health monitoring and second-life battery screening.',
+      'Fast-charging control strategies that balance charging speed and battery longevity.',
+    ],
+    'I use advanced machine learning (ML) and reinforcement learning (RL) methods to achieve cutting-edge results.',
+    'A central focus of my research is bridging the gap between algorithm development and real-world implementation by enabling efficient estimation, prognostics, and control on resource-constrained battery management hardware.',
+  ] as (string | string[])[],
 
   /** Research interests, rendered as tags on the homepage. */
   interests: [

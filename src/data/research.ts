@@ -131,6 +131,13 @@ export const cells: Record<string, Topic[]> = {
       body: [
         'Leveraging the relatively consistent charging patterns of EVs, I combine randomly selected charging segments with a neural network to estimate SOH and degradation modes within milliseconds on a microcontroller.',
       ],
+      figures: [
+        {
+          src: '/images/research/ev-random-charging.png',
+          alt: 'Three panels: voltage and current of a charging segment, model fit to that segment, and the reconstructed C/20 discharge curve with estimated capacity.',
+          caption: 'From a random charging segment (top), the voltage model is fitted with 4.84 mV RMSE (middle) and reconstructs the C/20 discharge curve, estimating capacity within 1.72% (bottom).',
+        },
+      ],
     },
     {
       id: 'pinn',
@@ -138,6 +145,13 @@ export const cells: Record<string, Topic[]> = {
       headline: 'Physics-constrained onboard health diagnostics from partial charging segments',
       body: [
         'I develop a physics-constrained neural network that diagnoses SOH and electrode-level degradation modes, loss of lithium inventory (LLI) and loss of active material (LAM), from partial charging segments. Validated on 421 cells across 4 datasets and 76 charging protocols, it achieves RMSEs of 1.75% for SOH, 1.86% for LLI, and 1.80%/3.72% for electrode-specific LAM. A lightweight version with 7,924 parameters runs on an STM32 microcontroller with 1.55 ms inference latency and 2.02% SOH RMSE.',
+      ],
+      figures: [
+        {
+          src: '/images/research/mcu-physics-constrained.png',
+          alt: 'On-chip pipeline from standardization through distilled network, physics layer and health metrics; photo of the NUCLEO-H723ZG board; bar chart of test RMSE; histogram of on-chip inference time.',
+          caption: 'On-chip pipeline on an STM32H723 microcontroller (left), the NUCLEO-H723ZG board (top right), on-chip test RMSE for SOH, LLI and electrode-specific LAM (middle right), and inference time per window, with a median of 1.55 ms (bottom right).',
+        },
       ],
     },
   ],
@@ -245,6 +259,13 @@ export const cells: Record<string, Topic[]> = {
       body: [
         'I design a circulating-current suppression strategy for parallel battery clusters that regulates cluster temperatures to reduce internal resistance mismatch, suppressing circulating currents near the end of charging and discharging.',
       ],
+      figures: [
+        {
+          src: '/images/research/parallel-cluster-current.png',
+          alt: 'Current of three parallel clusters over time under uniform-temperature and uniform-resistance control.',
+          caption: 'Currents of three parallel clusters over a full cycle under uniform-temperature control (dashed) and uniform-resistance control (solid).',
+        },
+      ],
     },
   ],
 
@@ -255,6 +276,13 @@ export const cells: Record<string, Topic[]> = {
       headline: 'From algorithm to microcontroller',
       body: [
         'I translate algorithms developed in MATLAB and Python into Simulink models, generate embedded C code, and deploy it on microcontrollers, validating functionality and real-time performance through model-in-the-loop (MIL), processor-in-the-loop (PIL), and hardware-in-the-loop (HIL) testing.',
+      ],
+      figures: [
+        {
+          src: '/images/research/mcu-deployment-architecture.png',
+          alt: 'Architecture on an STM32H723: BMS stream feeds a degradation model, operational segments trigger SOH estimation, and an EKF corrects the degradation model to predict capacity.',
+          caption: 'Embedded architecture on an STM32H723: the degradation model runs every second (29.7 µs per sample), operating segments trigger SOH estimation (7.16 s per event), and an EKF corrects the degradation model (7.9 µs per event), using 79.5 KiB of Flash and 24.4 KiB of SRAM.',
+        },
       ],
     },
   ],
