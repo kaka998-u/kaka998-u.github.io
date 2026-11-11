@@ -188,6 +188,18 @@ export const cells: Record<string, Topic[]> = {
       body: [
         'I develop a reduced-order degradation model incorporating SEI growth, loss of active material, and lithium plating, balancing predictive accuracy and computational efficiency for real-time deployment on resource-constrained microcontrollers.',
       ],
+      figures: [
+        {
+          src: '/images/research/reduced-model-structure.png',
+          alt: 'Block diagram: SEI growth, loss of active material, lithium plating and calendar aging submodels, linked by SEI thickness, resistance and porosity, summed into total capacity loss.',
+          caption: 'Model structure: SEI growth, loss of active material, lithium plating and calendar aging submodels are coupled and summed into the total capacity loss.',
+        },
+        {
+          src: '/images/research/reduced-model-validation.png',
+          alt: 'Three plots of capacity against equivalent full cycles comparing model prediction with experimental data, with calendar and cycling contributions.',
+          caption: 'Predicted against measured capacity fade under three test conditions, with SOH RMSE between 0.29% and 1.40%.',
+        },
+      ],
     },
   ],
 
