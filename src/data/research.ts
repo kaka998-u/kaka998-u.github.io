@@ -63,9 +63,16 @@ export const cells: Record<string, Topic[]> = {
     {
       id: 'joint',
       short: 'SOC / SOP / SOE estimation',
-      headline: 'Joint state estimation for EV packs',
+      headline: 'Joint state estimation for EV batteries',
       body: [
         'I develop equivalent-circuit-model-based algorithms in MATLAB/Simulink for SOC, SOP, and SOE estimation, including a joint estimation framework that accounts for SOH-dependent aging.',
+      ],
+      figures: [
+        {
+          src: '/images/research/joint-estimation-simulink.png',
+          alt: 'Simulink model with linked blocks for SOC, SOH, capacity and resistance update, parameter interpolation, SOP and SOE estimation.',
+          caption: 'Simulink implementation of the joint estimator: SOC, SOH, SOP and SOE blocks share capacity and resistance updates.',
+        },
       ],
     },
   ],
@@ -74,9 +81,21 @@ export const cells: Record<string, Topic[]> = {
     {
       id: 'mwhsoc',
       short: 'MWh-scale SOC estimation',
-      headline: 'SOC and SOH estimation for MWh-scale storage stations',
+      headline: 'SOC estimation for MWh-scale storage stations',
       body: [
-        'Using real-world operating data from MWh-scale LFP energy storage stations, I develop methods for accurate SOC and SOH estimation under practical operating conditions.',
+        'Using real-world operating data from MWh-scale LFP energy storage stations, I develop methods for accurate SOC estimation under practical operating conditions.',
+      ],
+      figures: [
+        {
+          src: '/images/research/bess-station-structure.png',
+          alt: 'Hierarchy from battery cells (2P) to battery units, modules (12S), clusters (19S) and the energy storage system (7P).',
+          caption: 'Structure of the storage station: 2P battery units, 12S modules, 19S clusters, and 7 clusters in parallel.',
+        },
+        {
+          src: '/images/research/bess-cluster-soc.png',
+          alt: 'Seven plots of SOC over a charge-discharge cycle, comparing the reference, the proposed algorithm and the system algorithm for each cluster.',
+          caption: 'SOC of the seven clusters over a full charge–discharge cycle: proposed algorithm against the reference and the station’s built-in algorithm.',
+        },
       ],
     },
   ],
@@ -123,6 +142,13 @@ export const cells: Record<string, Topic[]> = {
       headline: 'SOH diagnosis covering 1,596 LFP battery units in service',
       body: [
         'Using a voltage-curve transformation method, I accurately estimate the capacity of 1,596 LFP cells in operating energy storage systems, overcoming the challenge posed by the flat open-circuit voltage (OCV) plateau.',
+      ],
+      figures: [
+        {
+          src: '/images/research/bess-cluster-capacity.png',
+          alt: 'Seven scatter plots of remaining capacity against capacity for the battery units in each cluster, with the limiting units marked.',
+          caption: 'Estimated capacity and remaining capacity of every battery unit in the seven clusters, with the limiting units marked.',
+        },
       ],
     },
   ],

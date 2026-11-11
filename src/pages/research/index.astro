@@ -107,7 +107,9 @@ const cellKey = (methodId: string, appId: string | null) =>
             ))}
             {topic.figures?.map((f) => (
               <figure class="detail__figure">
-                <img src={f.src} alt={f.alt} loading="lazy" />
+                <a href={f.src} target="_blank" rel="noopener" title="Open full size">
+                  <img src={f.src} alt={f.alt} loading="lazy" />
+                </a>
                 <figcaption>{f.caption}</figcaption>
               </figure>
             ))}
